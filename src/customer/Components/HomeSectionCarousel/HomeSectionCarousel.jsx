@@ -5,7 +5,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import { Button } from "@mui/material";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { mens_kurta } from "../../../Data/mens_kurta";
+import { mens_kurta } from "../../Data/mens_kurta";
 import { HomeCarouselData } from "../Carousel/HomeCarouselData";
 
 const HomeSectionCarousel = ({data,sectionName}) => {
