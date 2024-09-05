@@ -59,6 +59,7 @@ export default function Checkout() {
 
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Button
+               
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
