@@ -32,8 +32,7 @@ import {
 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
-import {useLocation, useNavigate} from 'react-router-dom'
-
+import { useLocation, useNavigate } from "react-router-dom";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -47,46 +46,38 @@ function classNames(...classes) {
 export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate()
 
+  const navigate = useNavigate();
 
-  const handleFilter = (value,sectionId)=>{
+  const handleFilter = (value, sectionId) => {
     const searchParams = new URLSearchParams(location.search);
     
     
     let filterValue = searchParams.getAll(sectionId);
     console.log(filterValue);
-    
-
-    if(filterValue.length> 0 && filterValue[0].split(",").includes(value)){
-      console.log(filterValue[0]);
-      
-      filterValue = filterValue[0].split(",").filter((item)=> item !== value);
-      if(filterValue.length === 0){
-        searchParams.delete(sectionId)
+    if (filterValue.length > 0 && filterValue[0].split(",").includes(value)) {
+      filterValue = filterValue[0].split(",").filter((item) => item !== value);
+      if (filterValue.length === 0) {
+        searchParams.delete(sectionId);
       }
-    }
-    else{
-      filterValue.push(value)
+    } else {
+      filterValue.push(value);
     }
 
-    if(filterValue.length>0){
-      searchParams.set(sectionId,filterValue.join(","));
+    if (filterValue.length > 0) {
+      searchParams.set(sectionId, filterValue.join(","));
     }
     const query = searchParams.toString();
-    navigate({search:`?${query}`})
+    navigate({ search: `?${query}` });
+  };
 
-  }
+  const handleRadioFilterChange = (e, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
 
-  const handleRadioFilterChange = (e, sectionId)=>{
-    const searchParams = new URLSearchParams(location.search)
-
-    searchParams.set(sectionId,e.target.value)
+    searchParams.set(sectionId, e.target.value);
     const query = searchParams.toString();
-    navigate({search:`?${query}`})
-  }
-
-  
+    navigate({ search: `?${query}` });
+  };
 
   return (
     <div className="bg-white">
@@ -149,7 +140,9 @@ export default function Product() {
                         {section.options.map((option, optionIdx) => (
                           <div key={option.value} className="flex items-center">
                             <input
-                             onChange={()=>handleFilter(option.value,section.id)}
+                              onChange={() =>
+                                handleFilter(option.value, section.id)
+                              }
                               defaultValue={option.value}
                               defaultChecked={option.checked}
                               id={`filter-mobile-${section.id}-${optionIdx}`}
@@ -169,7 +162,7 @@ export default function Product() {
                     </DisclosurePanel>
                   </Disclosure>
                 ))}
-                { singleFilter.map((section) => (
+                {singleFilter.map((section) => (
                   <Disclosure
                     key={section.id}
                     as="div"
@@ -213,8 +206,10 @@ export default function Product() {
                                 {section.options.map((option, optionIdx) => (
                                   <>
                                     <FormControlLabel
-                                    key={optionIdx}
-                                    onChange={(e)=>handleRadioFilterChange(e,section.id)}
+                                      key={optionIdx}
+                                      onChange={(e) =>
+                                        handleRadioFilterChange(e, section.id)
+                                      }
                                       value={option.value}
                                       control={<Radio />}
                                       label={option.label}
@@ -339,7 +334,9 @@ export default function Product() {
                               className="flex items-center"
                             >
                               <input
-                              onChange={()=>handleFilter(option.value,section.id)}
+                                onChange={() =>
+                                  handleFilter(option.value, section.id)
+                                }
                                 defaultValue={option.value}
                                 defaultChecked={option.checked}
                                 id={`filter-${section.id}-${optionIdx}`}
@@ -396,7 +393,6 @@ export default function Product() {
                           <Disclosure.Panel className="pt-6">
                             <div className="space-y-4">
                               <FormControl>
-                                
                                 <RadioGroup
                                   aria-labelledby="demo-radio-buttons-group-label"
                                   defaultValue="female"
@@ -405,8 +401,10 @@ export default function Product() {
                                   {section.options.map((option, optionIdx) => (
                                     <>
                                       <FormControlLabel
-                                      key={section.id}
-                                      onChange={(e)=>handleRadioFilterChange(e,section.id)}
+                                        key={section.id}
+                                        onChange={(e) =>
+                                          handleRadioFilterChange(e, section.id)
+                                        }
                                         value={option.value}
                                         control={<Radio />}
                                         label={option.label}
