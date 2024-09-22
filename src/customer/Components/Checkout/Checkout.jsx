@@ -10,22 +10,16 @@ import { useLocation } from "react-router-dom";
 import DeliveryAddress from "./DeliveryAddress";
 import OrderSummary from "./OrderSummary";
 
-const steps = [
-  "Login",
-  "Delivery Address",
-  "Order Summary",
-  "Payment",
-];
+const steps = ["Login", "Delivery Address", "Order Summary", "Payment"];
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
-  
+
   const location = useLocation();
   const querySearch = new URLSearchParams(location.search);
   const step = querySearch.getAll("step");
 
   const handleNext = () => {
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -34,48 +28,43 @@ export default function Checkout() {
   };
 
   return (
-   <div className=" px-10 lg:px-20 ">
-     <Box sx={{ width: "100%" }}>
-      <Stepper activeStep={step}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
+    <div className=" px-10 lg:px-20 ">
+      <Box sx={{ width: "100%" }}>
+        <Stepper activeStep={step}>
+          {steps.map((label, index) => {
+            const stepProps = {};
+            const labelProps = {};
 
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        {activeStep === steps.length ? (
+          <React.Fragment>
+            <Typography sx={{ mt: 2, mb: 1 }}>
+              All steps completed - you&apos;re finished
+            </Typography>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>
+            </Box>
 
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Button
-               
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-          </Box>
-
-          <div>
-            {step == 2 ? <DeliveryAddress/> : <OrderSummary/>  }
-          </div>
-
-        </React.Fragment>
-      )}
-    </Box>
-   </div>
+            <div className=" mt-10">{step == 2 ? <DeliveryAddress /> : <OrderSummary />}</div>
+          </React.Fragment>
+        )}
+      </Box>
+    </div>
   );
 }
